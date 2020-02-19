@@ -7,6 +7,16 @@ create table users (
 	index firstname_lastname_idx(firstname,lastname)
 );
 
+drop table if exists photo;
+create table photo (
+	id serial primary key,
+	filename varchar(255),
+	filesize int,
+	metadata json,
+	created_at datetime default now(),
+	updated_at datetime default now() 
+);
+
 drop table if exists profile;
 create table profile(
 	user_id bigint unsigned not null,
@@ -25,10 +35,9 @@ create table profile(
 	registration_address varchar(255),
 	
 	index homecity_idx(homecity),
-	foreign key (user_id) references users(id) on update cascade
+	foreign key (user_id) references users(id) on update cascade,
+	foreign key (photo_id) references photo(id)
 );
-
-
 
 drop table if exists notifications;
 create table notifications (
@@ -77,6 +86,7 @@ create table services (
 	category_service_id bigint unsigned not null,
 	created_at datetime default now(),
 	updated_at datetime default now(),
+	type_user enum ('citizen', 'entity', 'businessman', 'foreign citizen', 'partner'),
 	
 	index ownerserv_idx(user_id),
 	foreign key (category_service_id) references services_category(id),
