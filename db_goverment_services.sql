@@ -84,9 +84,11 @@ create table services (
 	id serial primary key,
 	user_id bigint unsigned,
 	category_service_id bigint unsigned not null,
+	price varchar(255),
 	created_at datetime default now(),
 	updated_at datetime default now(),
 	type_user enum ('citizen', 'entity', 'businessman', 'foreign citizen', 'partner'),
+	
 	
 	index ownerserv_idx(user_id),
 	foreign key (category_service_id) references services_category(id),
