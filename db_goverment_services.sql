@@ -111,6 +111,7 @@ create table payment (
 	user_id bigint unsigned not null,
 	services_id bigint unsigned not null,
 	payment_cart_id bigint unsigned,
+	create_pay datetime default current_timestamp()
 	
 	index ownerpayment_idx(user_id),
 	index paymentgoal_idx(services_id),
