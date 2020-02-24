@@ -19,12 +19,12 @@ create table photo (
 
 drop table if exists profile;
 create table profile(
-	user_id bigint unsigned not null,
-	is_confirmed bit default false,
+	user_id serial primary key,
+	is_confirmed bool default false,
 	photo_id bigint unsigned,
 	created_at datetime default current_timestamp(),
 	updated_at datetime default current_timestamp(),
-	gender bit,
+	gender char(1),
 	birthday_date date,
 	homecity varchar(255),
 	email varchar(255) unique,
@@ -60,8 +60,7 @@ create table document_type (
 drop table if exists documents;
 create table documents (
 	id serial primary key,
-	body varchar(255),
-	is_confirmed bit default false,
+	is_confirmed bool default false,
 	document_type_id bigint unsigned not null,
 	user_id bigint unsigned not null,
 	
@@ -82,23 +81,21 @@ create table services_category (
 drop table if exists services;
 create table services (
 	id serial primary key,
-	user_id bigint unsigned,
+	name varchar(255),
 	category_service_id bigint unsigned not null,
 	price varchar(255),
 	created_at datetime default now(),
 	updated_at datetime default now(),
-	type_user enum ('citizen', 'entity', 'businessman', 'foreign citizen', 'partner'),
 	
 	
-	index ownerserv_idx(user_id),
-	foreign key (category_service_id) references services_category(id),
-	foreign key (user_id) references users(id)
+	foreign key (category_service_id) references services_category(id)
 );
 
 drop table if exists payment_cart;
 create table payment_cart (
 	id serial primary key,
 	name varchar(255),
+	type_cart varchar(255),
 	user_id bigint unsigned not null,
 	
 	index ownercart_idx (user_id),
@@ -111,7 +108,7 @@ create table payment (
 	user_id bigint unsigned not null,
 	services_id bigint unsigned not null,
 	payment_cart_id bigint unsigned,
-	create_pay datetime default current_timestamp()
+	create_pay datetime default current_timestamp(),
 	
 	index ownerpayment_idx(user_id),
 	index paymentgoal_idx(services_id),
