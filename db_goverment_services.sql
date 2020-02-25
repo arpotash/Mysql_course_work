@@ -97,6 +97,7 @@ create table payment_cart (
 	name varchar(255),
 	type_cart varchar(255),
 	user_id bigint unsigned not null,
+	amount int,
 	
 	index ownercart_idx (user_id),
 	foreign key (user_id) references users(id)
