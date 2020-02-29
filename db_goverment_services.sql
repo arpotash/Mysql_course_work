@@ -11,10 +11,10 @@ drop table if exists photo;
 create table photo (
 	id serial primary key,
 	filename varchar(255),
-	filesize int,
-	metadata json,
+	filesize int unsigned not null,
+	expansion enum ('jpeg', 'bmp', 'png', 'jpg'),
 	created_at datetime default now(),
-	updated_at datetime default now() 
+	updated_at datetime default now()
 );
 
 drop table if exists profile;
@@ -28,7 +28,7 @@ create table profile(
 	birthday_date date,
 	homecity varchar(255),
 	email varchar(255) unique,
-	phone bigint unique,
+	phone varchar(255) unique,
 	address varchar(255),
 	transport varchar(255),
 	child_info varchar(255),
@@ -60,9 +60,11 @@ create table document_type (
 drop table if exists documents;
 create table documents (
 	id serial primary key,
-	is_confirmed bool default false,
 	document_type_id bigint unsigned not null,
 	user_id bigint unsigned not null,
+	num bigint unsigned not null,
+	getting_date date,
+	getting_place varchar(255),
 	
 	index docowner_idx(user_id),
 	index doctype_idx(document_type_id),
@@ -82,8 +84,14 @@ drop table if exists services;
 create table services (
 	id serial primary key,
 	name varchar(255),
+	lead_time varchar(255),
 	category_service_id bigint unsigned not null,
-	price varchar(255),
+	price int unsigned,
+	discount int unsigned,
+	desctiption varchar(255),
+	contacts varchar(255),
+	service_num bigint unsigned not null,
+
 	created_at datetime default now(),
 	updated_at datetime default now(),
 	
@@ -117,3 +125,20 @@ create table payment (
 	foreign key (services_id) references services(id),
 	foreign key (payment_cart_id) references payment_cart(id)
 );
+
+drop table if exists reserve_profile;
+create table reserve_profile(
+	user_id bigint unsigned not null,
+	is_confirmed bool,
+	created_at datetime,
+	gender char(1),
+	birthday_date date,
+	homecity varchar(255),
+	email varchar(255),
+	phone varchar(255),
+	address varchar(255),
+	transport varchar(255),
+	child_info varchar(255),
+	registration_address varchar(255)
+	
+) ENGINE= ARCHIVE;
