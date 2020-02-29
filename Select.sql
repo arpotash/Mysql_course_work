@@ -6,7 +6,7 @@ join profile p on u.id = p.user_id
 
 -- выборка всех услуг, приобретенных пользователем
 
-select u.id, u.firstname, u.lastname, se.name, se.price, sc.name
+select u.id, concat(u.firstname,' ', u.lastname) as name, se.name as service_name, se.price, sc.name
 from users u
 join payment py on u.id = py.user_id
 join services se on py.services_id = se.id
@@ -15,10 +15,9 @@ where u.id = 1
 
 -- количество активных документов у каждого пользователя
 
-select count(d2.is_confirmed) as count_activity_docs , d2.user_id
+select count(d2.id) as count_activity_docs , d2.user_id
 from documents d2
 join users u on d2.user_id = u.id 
-where d2.is_confirmed = 1
 group by user_id
 order by count_activity_docs desc
 
