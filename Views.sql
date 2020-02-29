@@ -15,7 +15,6 @@ as select count(dc.id), u.id
 from users u
 join documents dc on
 u.id = dc.user_id
-where dc.is_confirmed = 1
 group by u.id
 having count(dc.id) > 2
 select * from users_docs
