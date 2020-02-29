@@ -1,3 +1,5 @@
+-- триггер на вставку данных в таблицу профиль
+
 delimiter //
 drop trigger if exists profile_insert//
 create trigger data_insert before insert on profile
@@ -7,6 +9,9 @@ begin
 		signal sqlstate '45000' set message_text = 'Одно из полей должно быть заполнено (email, phone)';
 	end if;
 end//
+
+
+-- -- триггер на обновление данных в таблицу профиль
 
 delimiter //
 drop trigger if exists profile_update//
@@ -18,6 +23,7 @@ begin
 	end if;
 end//
 
+-- триггер на удаление данных в таблицу профиль, данные переносятся в таблицу reserve_profile
 
 delimiter //
 drop trigger if exists profile_delete//
