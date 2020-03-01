@@ -126,19 +126,11 @@ create table payment (
 	foreign key (payment_cart_id) references payment_cart(id)
 );
 
-drop table if exists reserve_profile;
-create table reserve_profile(
-	user_id bigint unsigned not null,
-	is_confirmed bool,
+drop table if exists logs;
+create table logs(
+	col_id bigint,
 	created_at datetime,
-	gender char(1),
-	birthday_date date,
-	homecity varchar(255),
-	email varchar(255),
-	phone varchar(255),
-	address varchar(255),
-	transport varchar(255),
-	child_info varchar(255),
-	registration_address varchar(255)
+	name varchar(255),
+	table_name varchar(255)
 	
 ) ENGINE= ARCHIVE;
