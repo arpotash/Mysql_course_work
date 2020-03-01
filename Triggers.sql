@@ -132,7 +132,7 @@ drop trigger if exists inserting_payment//
 create trigger updating_payment after insert on payment
 for each row
 begin
-	insert into logs (col_id, created_at, name, table_name) values (new.id, now(), concat(user_id, ' ', services_id), 'payment');
+	insert into logs (col_id, created_at, name, table_name) values (new.id, now(), concat(new.user_id, ' ', new.services_id), 'payment');
 end//
 
 -- тригер добавления услуги
@@ -155,4 +155,5 @@ delimiter //
 begin
 	insert into logs (col_id, created_at, name, table_name) values (new.id, now(), name, 'services');
 end//
+
 
