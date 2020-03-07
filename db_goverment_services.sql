@@ -126,6 +126,15 @@ create table payment (
 	foreign key (payment_cart_id) references payment_cart(id)
 );
 
+drop table if exists service_need_docs;
+create table service_need_docs(
+	service_id bigint unsigned not null,
+	document_type_id bigint unsigned not null,
+	
+	foreign key (service_id) references services(id),
+	foreign key (document_type_id) references document_type(id)
+);
+
 drop table if exists logs;
 create table logs(
 	col_id bigint,
